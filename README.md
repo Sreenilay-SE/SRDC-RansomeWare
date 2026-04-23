@@ -106,7 +106,7 @@ These results indicate the model’s practical viability in terms of speed and r
 
 For large-scale deployments with multiple concurrent requests, we can deploy the pre-trained model across multiple clusters, supporting multi-cluster deployment from a single training session.
 
-### 🙋‍♂️If you have any questions about our project, please send email to 2272127@stu.neu.edu.cn.
+
 
 
 
