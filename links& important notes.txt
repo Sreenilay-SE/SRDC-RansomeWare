@@ -1,0 +1,577 @@
+----------------------------------SRDC STEP ONE----------------------------------------------
+
+https://grok.com/share/c2hhcmQtMg_1b03c0d6-478c-4cc4-942d-18281dff3e7a
+
+--------------------------------cloned github repo step2 --------------------
+https://grok.com/share/c2hhcmQtMg_a3614100-4f7e-4752-adc9-e84575b6551a
+
+
+
+------------------------cmd till above---------------------------------------------------
+
+PS C:\DOMAIN-PRO-SRDC> python -m venv srdc
+PS C:\DOMAIN-PRO-SRDC> srdc\Scripts\activate
+(srdc) PS C:\DOMAIN-PRO-SRDC> pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu  # CPU version since your laptop likely has no GPU
+>> pip install transformers datasets pandas numpy scikit-learn
+Looking in indexes: https://download.pytorch.org/whl/cpu
+Collecting torch
+  Downloading https://download.pytorch.org/whl/cpu/torch-2.10.0%2Bcpu-cp312-cp312-win_amd64.whl.metadata (29 kB)
+Collecting torchvision
+  Downloading https://download.pytorch.org/whl/cpu/torchvision-0.25.0%2Bcpu-cp312-cp312-win_amd64.whl.metadata (5.5 kB)
+Collecting torchaudio
+  Downloading https://download.pytorch.org/whl/cpu/torchaudio-2.10.0%2Bcpu-cp312-cp312-win_amd64.whl.metadata (7.0 kB)
+Collecting filelock (from torch)
+  Downloading filelock-3.20.0-py3-none-any.whl.metadata (2.1 kB)
+Collecting typing-extensions>=4.10.0 (from torch)
+  Downloading https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting sympy>=1.13.3 (from torch)
+  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx>=2.5.1 (from torch)
+  Downloading networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+Collecting jinja2 (from torch)
+  Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec>=0.8.5 (from torch)
+  Downloading fsspec-2025.12.0-py3-none-any.whl.metadata (10 kB)
+Collecting setuptools (from torch)
+  Downloading https://download.pytorch.org/whl/setuptools-70.2.0-py3-none-any.whl.metadata (5.8 kB)
+Collecting numpy (from torchvision)
+  Downloading numpy-2.3.5-cp312-cp312-win_amd64.whl.metadata (60 kB)
+Collecting pillow!=8.3.*,>=5.3.0 (from torchvision)
+  Using cached pillow-12.0.0-cp312-cp312-win_amd64.whl.metadata (9.0 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch)
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Downloading https://download.pytorch.org/whl/MarkupSafe-2.1.5-cp312-cp312-win_amd64.whl (17 kB)
+Downloading https://download.pytorch.org/whl/cpu/torch-2.10.0%2Bcpu-cp312-cp312-win_amd64.whl (113.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 113.7/113.7 MB 3.7 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/cpu/torchvision-0.25.0%2Bcpu-cp312-cp312-win_amd64.whl (4.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 4.0 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/cpu/torchaudio-2.10.0%2Bcpu-cp312-cp312-win_amd64.whl (473 kB)
+Downloading fsspec-2025.12.0-py3-none-any.whl (201 kB)
+Downloading networkx-3.6.1-py3-none-any.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 3.5 MB/s eta 0:00:00
+Using cached pillow-12.0.0-cp312-cp312-win_amd64.whl (7.0 MB)
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 4.1 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Downloading filelock-3.20.0-py3-none-any.whl (16 kB)
+Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading numpy-2.3.5-cp312-cp312-win_amd64.whl (12.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.8/12.8 MB 3.8 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/setuptools-70.2.0-py3-none-any.whl (930 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 930.8/930.8 kB 4.3 MB/s eta 0:00:00
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 3.5 MB/s eta 0:00:00
+Installing collected packages: mpmath, typing-extensions, sympy, setuptools, pillow, numpy, networkx, MarkupSafe, fsspec, filelock, jinja2, torch, torchvision, torchaudio
+Successfully installed MarkupSafe-2.1.5 filelock-3.20.0 fsspec-2025.12.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.6.1 numpy-2.3.5 pillow-12.0.0 setuptools-70.2.0 sympy-1.14.0 torch-2.10.0+cpu torchaudio-2.10.0+cpu torchvision-0.25.0+cpu typing-extensions-4.15.0
+Collecting transformers
+  Downloading transformers-5.1.0-py3-none-any.whl.metadata (31 kB)
+Collecting datasets
+  Downloading datasets-4.5.0-py3-none-any.whl.metadata (19 kB)
+Collecting pandas
+  Downloading pandas-3.0.0-cp312-cp312-win_amd64.whl.metadata (19 kB)
+Requirement already satisfied: numpy in c:\domain-pro-srdc\srdc\lib\site-packages (2.3.5)
+Collecting scikit-learn
+  Downloading scikit_learn-1.8.0-cp312-cp312-win_amd64.whl.metadata (11 kB)
+Collecting huggingface-hub<2.0,>=1.3.0 (from transformers)
+  Downloading huggingface_hub-1.4.1-py3-none-any.whl.metadata (13 kB)
+Collecting packaging>=20.0 (from transformers)
+  Using cached packaging-26.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting pyyaml>=5.1 (from transformers)
+  Using cached pyyaml-6.0.3-cp312-cp312-win_amd64.whl.metadata (2.4 kB)
+Collecting regex!=2019.12.17 (from transformers)
+  Downloading regex-2026.1.15-cp312-cp312-win_amd64.whl.metadata (41 kB)
+Collecting tokenizers<=0.23.0,>=0.22.0 (from transformers)
+  Downloading tokenizers-0.22.2-cp39-abi3-win_amd64.whl.metadata (7.4 kB)
+Collecting typer-slim (from transformers)
+  Downloading typer_slim-0.23.0-py3-none-any.whl.metadata (4.2 kB)
+Collecting safetensors>=0.4.3 (from transformers)
+  Downloading safetensors-0.7.0-cp38-abi3-win_amd64.whl.metadata (4.2 kB)
+Collecting tqdm>=4.27 (from transformers)
+  Downloading tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)
+Requirement already satisfied: filelock in c:\domain-pro-srdc\srdc\lib\site-packages (from datasets) (3.20.0)
+Collecting pyarrow>=21.0.0 (from datasets)
+  Downloading pyarrow-23.0.0-cp312-cp312-win_amd64.whl.metadata (3.1 kB)
+Collecting dill<0.4.1,>=0.3.0 (from datasets)
+  Downloading dill-0.4.0-py3-none-any.whl.metadata (10 kB)
+Collecting requests>=2.32.2 (from datasets)
+  Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+Collecting httpx<1.0.0 (from datasets)
+  Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting xxhash (from datasets)
+  Downloading xxhash-3.6.0-cp312-cp312-win_amd64.whl.metadata (13 kB)
+Collecting multiprocess<0.70.19 (from datasets)
+  Downloading multiprocess-0.70.18-py312-none-any.whl.metadata (7.5 kB)
+Collecting fsspec<=2025.10.0,>=2023.1.0 (from fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Downloading fsspec-2025.10.0-py3-none-any.whl.metadata (10 kB)
+Collecting python-dateutil>=2.8.2 (from pandas)
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting tzdata (from pandas)
+  Downloading tzdata-2025.3-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting scipy>=1.10.0 (from scikit-learn)
+  Downloading scipy-1.17.0-cp312-cp312-win_amd64.whl.metadata (60 kB)
+Collecting joblib>=1.3.0 (from scikit-learn)
+  Downloading joblib-1.5.3-py3-none-any.whl.metadata (5.5 kB)
+Collecting threadpoolctl>=3.2.0 (from scikit-learn)
+  Using cached threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Collecting aiohttp!=4.0.0a0,!=4.0.0a1 (from fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Downloading aiohttp-3.13.3-cp312-cp312-win_amd64.whl.metadata (8.4 kB)
+Collecting anyio (from httpx<1.0.0->datasets)
+  Downloading anyio-4.12.1-py3-none-any.whl.metadata (4.3 kB)
+Collecting certifi (from httpx<1.0.0->datasets)
+  Downloading certifi-2026.1.4-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1.0.0->datasets)
+  Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx<1.0.0->datasets)
+  Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0->datasets)
+  Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting hf-xet<2.0.0,>=1.2.0 (from huggingface-hub<2.0,>=1.3.0->transformers)
+  Downloading hf_xet-1.2.0-cp37-abi3-win_amd64.whl.metadata (5.0 kB)
+Collecting shellingham (from huggingface-hub<2.0,>=1.3.0->transformers)
+  Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+Requirement already satisfied: typing-extensions>=4.1.0 in c:\domain-pro-srdc\srdc\lib\site-packages (from huggingface-hub<2.0,>=1.3.0->transformers) (4.15.0)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas)
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting charset_normalizer<4,>=2 (from requests>=2.32.2->datasets)
+  Downloading charset_normalizer-3.4.4-cp312-cp312-win_amd64.whl.metadata (38 kB)
+Collecting urllib3<3,>=1.21.1 (from requests>=2.32.2->datasets)
+  Downloading urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+Collecting colorama (from tqdm>=4.27->transformers)
+  Using cached colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting typer>=0.23.0 (from typer-slim->transformers)
+  Downloading typer-0.23.0-py3-none-any.whl.metadata (16 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Using cached aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.4.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Using cached aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting attrs>=17.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Using cached attrs-25.4.0-py3-none-any.whl.metadata (10 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Downloading frozenlist-1.8.0-cp312-cp312-win_amd64.whl.metadata (21 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Downloading multidict-6.7.1-cp312-cp312-win_amd64.whl.metadata (5.5 kB)
+Collecting propcache>=0.2.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Downloading propcache-0.4.1-cp312-cp312-win_amd64.whl.metadata (14 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2025.10.0,>=2023.1.0->datasets)
+  Downloading yarl-1.22.0-cp312-cp312-win_amd64.whl.metadata (77 kB)
+Collecting click>=8.0.0 (from typer>=0.23.0->typer-slim->transformers)
+  Using cached click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+Collecting rich>=10.11.0 (from typer>=0.23.0->typer-slim->transformers)
+  Downloading rich-14.3.2-py3-none-any.whl.metadata (18 kB)
+Collecting annotated-doc>=0.0.2 (from typer>=0.23.0->typer-slim->transformers)
+  Downloading annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=10.11.0->typer>=0.23.0->typer-slim->transformers)
+  Downloading markdown_it_py-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=10.11.0->typer>=0.23.0->typer-slim->transformers)
+  Using cached pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=10.11.0->typer>=0.23.0->typer-slim->transformers)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading transformers-5.1.0-py3-none-any.whl (10.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.3/10.3 MB 4.0 MB/s eta 0:00:00
+Downloading datasets-4.5.0-py3-none-any.whl (515 kB)
+Downloading pandas-3.0.0-cp312-cp312-win_amd64.whl (9.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.7/9.7 MB 2.9 MB/s eta 0:00:00
+Downloading scikit_learn-1.8.0-cp312-cp312-win_amd64.whl (8.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.0/8.0 MB 2.7 MB/s eta 0:00:00
+Downloading dill-0.4.0-py3-none-any.whl (119 kB)
+Downloading fsspec-2025.10.0-py3-none-any.whl (200 kB)
+Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading huggingface_hub-1.4.1-py3-none-any.whl (553 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 553.3/553.3 kB 2.1 MB/s eta 0:00:00
+Downloading joblib-1.5.3-py3-none-any.whl (309 kB)
+Downloading multiprocess-0.70.18-py312-none-any.whl (150 kB)
+Using cached packaging-26.0-py3-none-any.whl (74 kB)
+Downloading pyarrow-23.0.0-cp312-cp312-win_amd64.whl (27.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 27.7/27.7 MB 3.0 MB/s eta 0:00:00
+Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Using cached pyyaml-6.0.3-cp312-cp312-win_amd64.whl (154 kB)
+Downloading regex-2026.1.15-cp312-cp312-win_amd64.whl (277 kB)
+Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+Downloading safetensors-0.7.0-cp38-abi3-win_amd64.whl (341 kB)
+Downloading scipy-1.17.0-cp312-cp312-win_amd64.whl (36.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.3/36.3 MB 3.9 MB/s eta 0:00:00
+Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Downloading tokenizers-0.22.2-cp39-abi3-win_amd64.whl (2.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.7/2.7 MB 4.3 MB/s eta 0:00:00
+Downloading tqdm-4.67.3-py3-none-any.whl (78 kB)
+Downloading typer_slim-0.23.0-py3-none-any.whl (3.4 kB)
+Downloading tzdata-2025.3-py2.py3-none-any.whl (348 kB)
+Downloading xxhash-3.6.0-cp312-cp312-win_amd64.whl (31 kB)
+Downloading aiohttp-3.13.3-cp312-cp312-win_amd64.whl (455 kB)
+Downloading certifi-2026.1.4-py3-none-any.whl (152 kB)
+Downloading charset_normalizer-3.4.4-cp312-cp312-win_amd64.whl (107 kB)
+Downloading hf_xet-1.2.0-cp37-abi3-win_amd64.whl (2.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.9/2.9 MB 4.2 MB/s eta 0:00:00
+Downloading idna-3.11-py3-none-any.whl (71 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading typer-0.23.0-py3-none-any.whl (56 kB)
+Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Downloading urllib3-2.6.3-py3-none-any.whl (131 kB)
+Downloading anyio-4.12.1-py3-none-any.whl (113 kB)
+Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Using cached aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Using cached aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+Downloading annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+Using cached attrs-25.4.0-py3-none-any.whl (67 kB)
+Using cached click-8.3.1-py3-none-any.whl (108 kB)
+Downloading frozenlist-1.8.0-cp312-cp312-win_amd64.whl (44 kB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading multidict-6.7.1-cp312-cp312-win_amd64.whl (46 kB)
+Downloading propcache-0.4.1-cp312-cp312-win_amd64.whl (41 kB)
+Downloading rich-14.3.2-py3-none-any.whl (309 kB)
+Downloading yarl-1.22.0-cp312-cp312-win_amd64.whl (87 kB)
+Downloading markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+Using cached pygments-2.19.2-py3-none-any.whl (1.2 MB)
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Installing collected packages: xxhash, urllib3, tzdata, threadpoolctl, six, shellingham, scipy, safetensors, regex, pyyaml, pygments, pyarrow, propcache, packaging, multidict, mdurl, joblib, idna, hf-xet, h11, fsspec, frozenlist, dill, colorama, charset_normalizer, certifi, attrs, annotated-doc, aiohappyeyeballs, yarl, tqdm, scikit-learn, requests, python-dateutil, multiprocess, markdown-it-py, httpcore, click, anyio, aiosignal, rich, pandas, httpx, aiohttp, typer, typer-slim, huggingface-hub, tokenizers, datasets, transformers
+  Attempting uninstall: fsspec
+    Found existing installation: fsspec 2025.12.0
+    Uninstalling fsspec-2025.12.0:
+      Successfully uninstalled fsspec-2025.12.0
+Successfully installed aiohappyeyeballs-2.6.1 aiohttp-3.13.3 aiosignal-1.4.0 annotated-doc-0.0.4 anyio-4.12.1 attrs-25.4.0 certifi-2026.1.4 charset_normalizer-3.4.4 click-8.3.1 colorama-0.4.6 datasets-4.5.0 dill-0.4.0 frozenlist-1.8.0 fsspec-2025.10.0 h11-0.16.0 hf-xet-1.2.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-1.4.1 idna-3.11 joblib-1.5.3 markdown-it-py-4.0.0 mdurl-0.1.2 multidict-6.7.1 multiprocess-0.70.18 packaging-26.0 pandas-3.0.0 propcache-0.4.1 pyarrow-23.0.0 pygments-2.19.2 python-dateutil-2.9.0.post0 pyyaml-6.0.3 regex-2026.1.15 requests-2.32.5 rich-14.3.2 safetensors-0.7.0 scikit-learn-1.8.0 scipy-1.17.0 shellingham-1.5.4 six-1.17.0 threadpoolctl-3.6.0 tokenizers-0.22.2 tqdm-4.67.3 transformers-5.1.0 typer-0.23.0 typer-slim-0.23.0 tzdata-2025.3 urllib3-2.6.3 xxhash-3.6.0 yarl-1.22.0
+
+[notice] A new release of pip is available: 24.2 -> 26.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(srdc) PS C:\DOMAIN-PRO-SRDC> python -c "import torch; import transformers; print('OK - imports successful')"
+OK - imports successful
+(srdc) PS C:\DOMAIN-PRO-SRDC> git clone https://github.com/Michael-zhouce/SRDC.git
+fatal: destination path 'SRDC' already exists and is not an empty directory.
+(srdc) PS C:\DOMAIN-PRO-SRDC> git clone https://github.com/Michael-zhouce/project.git
+Cloning into 'project'...
+remote: Repository not found.
+fatal: repository 'https://github.com/Michael-zhouce/project.git/' not found
+(srdc) PS C:\DOMAIN-PRO-SRDC> cd project
+(srdc) PS C:\DOMAIN-PRO-SRDC\project> git clone https://github.com/Michael-zhouce/SRDC.git   
+Cloning into 'SRDC'...
+remote: Enumerating objects: 64, done.
+remote: Counting objects: 100% (64/64), done.
+remote: Compressing objects: 100% (47/47), done.
+remote: Total 64 (delta 29), reused 49 (delta 15), pack-reused 0 (from 0)
+Receiving objects: 100% (64/64), 1.21 MiB | 549.00 KiB/s, done.
+Resolving deltas: 100% (29/29), done.
+(srdc) PS C:\DOMAIN-PRO-SRDC\project> cd srdc
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\srdc> dir
+
+
+    Directory: C:\DOMAIN-PRO-SRDC\project\srdc
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        11-02-2026  09:13 PM                Feature_Internal_Semantic_Processing
+d-----        11-02-2026  09:13 PM                Pretraining_Corpus
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        11-02-2026  09:13 PM                Feature_Internal_Semantic_Processing
+d-----        11-02-2026  09:13 PM                Pretraining_Corpus
+d-----        11-02-2026  09:13 PM                Pretraining_Corpus
+d-----        11-02-2026  09:13 PM                Ransomware_Family_Classification
+d-----        11-02-2026  09:13 PM                ZeroDay_Ransomware_Detection
+-a----        11-02-2026  09:13 PM           5289 README.md
+-a----        11-02-2026  09:13 PM         560576 SRDC.pdf
+
+
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\srdc>
+
+
+
+---------------------------------------------------------------------------------
+
+
+
+
+
+
+----------------------------------------------step 3 done----------------------------------------
+
+https://grok.com/share/c2hhcmQtMg_7e5494ff-c1e0-44f6-abb8-837c63b68e67
+
+
+
+
+
+Sir/Ma’am, I’m currently working on reproducing a research paper from AAAI 2025 conference. The paper is titled SRDC: Semantics-based Ransomware Detection and Classification with LLM-assisted Pre-training.
+The main idea is: instead of just pattern-matching to detect ransomware, they teach a small language model (like a mini-GPT) to understand the meaning behind what the malware is doing — like a security expert would. They use both the meanings inside the program’s actions (API calls, file operations) and external knowledge (what experts say about suspicious behaviors).
+I’m trying to run their open-source code on my laptop to see how it works in practice.
+Right now on my laptop I have these main things:
+
+A virtual environment folder called srdc
+→ This is like a clean Python room where I installed only the packages needed for this project (PyTorch, Transformers, Pandas, etc.). So my main Python doesn’t get messed up.
+The project folder: C:\DOMAIN-PRO-SRDC\project\srdc (cloned from GitHub)
+Inside it there are these folders:
+Feature_Internal_Semantic_Processing → contains the script Internal_Semantic_Processing.py
+This is the most important first step. It takes raw ransomware behavior logs (API calls, registry changes, file opens) and rewrites them into natural English sentences.
+Example: “GetFileSize” becomes “get file size”, and “FILES:OPENED:C:\file.doc” becomes “open the file C:\file.doc”.
+This makes it easier for the language model to understand the intent.
+Pretraining_Corpus → this has text files with explanations collected from Microsoft docs + generated by GPT-3.5 + checked by experts.
+This is the “external knowledge” the model learns first (what APIs do, why some registry changes are dangerous, etc.). They used this to pre-train the model before fine-tuning on real data.
+ZeroDay_Ransomware_Detection → script ransomware_0_day_detection.py
+This is for detecting completely new ransomware families (zero-day) that the model never saw during training.
+Ransomware_Family_Classification → script ransomware_family_classifier.py
+This classifies which family the ransomware belongs to (like WannaCry, Locky, etc.).
+
+data folder (I created it)
+RansomwareData.csv → this is the main dataset from a 2016 research group (Sgandurra et al.). It has dynamic behavior logs of 582 ransomware samples (11 families) + 942 normal programs (goodware).
+VariableNames.txt → list of all possible feature names (API names, registry keys, etc.) used in the CSV.
+
+
+Right now I’m at the stage where I’ve downloaded the dataset, put it in the data folder, and I’m about to run the semantic processing script to convert the raw CSV into meaningful text that the model can understand better.
+After that, I plan to run the detection and classification scripts using their pre-trained model from Hugging Face to see the accuracy numbers.
+I’m doing this to learn:
+
+How language models can be used in cybersecurity
+How pre-training with domain knowledge helps in few-shot / zero-shot detection
+Practical ML pipeline: data → preprocessing → model → evaluation
+
+If it works well, I might try to test it on some dummy/benign programs or see if I can extend it a bit.
+
+
+
+
+
+
+
+----------------------------------------------------------
+
+
+-------------------------------------------------------------------step 4 ------------------------------------------------------
+
+done
+
+
+---------------------------------------step 5-------------------------------------
+
+https://grok.com/share/c2hhcmQtMg_770e02b1-9ca9-4799-bd19-19bb2e4f5b7a
+
+
+done till point 1 (1. Split your processed CSV into train and test)
+
+
+have to do point 2 (2. Run the zero-day detection script
+                             Now use the files you just created:
+                              Bashpython ZeroDay_Ransomware_Detection/ransomware_0_day_detection.py ^
+                              --Data_Train_path train.csv ^
+                              --Data_Test_path test.csv)
+
+
+
+-----------------cmd during step 5----------------------
+
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python ZeroDay_Ransomware_Detection/ransomware_0_day_detection.py ^
+>>   --Data_Train_path train.csv ^
+>>   --Data_Test_path test.csv
+At line:2 char:5
++   --Data_Train_path train.csv ^
++     ~
+Missing expression after unary operator '--'.
+At line:2 char:5
++   --Data_Train_path train.csv ^
++     ~~~~~~~~~~~~~~~
+Unexpected token 'Data_Train_path' in expression or statement.
+At line:3 char:5
++   --Data_Test_path test.csv
++     ~
+Missing expression after unary operator '--'.
+At line:3 char:5
++   --Data_Test_path test.csv
++     ~~~~~~~~~~~~~~
+Unexpected token 'Data_Test_path' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingExpressionAfterOperator
+
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> 
+
+
+--------------------------------complete cmd on feb 13----------------------------------------
+
+PS C:\DOMAIN-PRO-SRDC> srdc/Scripts/activate
+(srdc) PS C:\DOMAIN-PRO-SRDC> cd C:\DOMAIN-PRO-SRDC\project\srdc
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\srdc>
+ *  History restored 
+
+PS C:\DOMAIN-PRO-SRDC> srdc/Scripts/activate
+(srdc) PS C:\DOMAIN-PRO-SRDC> cd project\SRDC
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python Feature_Internal_Semantic_Processing/Internal_Semantic_Processing.py --RansomwareData_csv_path data/RansomwareData/RansomwareData.csv --VariableNames_txt_path data/VariableNames.txt
+Traceback (most recent call last):
+  File "C:\DOMAIN-PRO-SRDC\project\SRDC\Feature_Internal_Semantic_Processing\Internal_Semantic_Processing.py", line 6, in <module>
+    import matplotlib.pyplot as plt
+ModuleNotFoundError: No module named 'matplotlib'
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python -m  pip install matplotlib
+Collecting matplotlib
+  Downloading matplotlib-3.10.8-cp312-cp312-win_amd64.whl.metadata (52 kB)
+Collecting contourpy>=1.0.1 (from matplotlib)
+  Using cached contourpy-1.3.3-cp312-cp312-win_amd64.whl.metadata (5.5 kB)
+Collecting cycler>=0.10 (from matplotlib)
+  Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib)
+  Downloading fonttools-4.61.1-cp312-cp312-win_amd64.whl.metadata (116 kB)
+Collecting kiwisolver>=1.3.1 (from matplotlib)
+  Using cached kiwisolver-1.4.9-cp312-cp312-win_amd64.whl.metadata (6.4 kB)
+Requirement already satisfied: numpy>=1.23 in c:\domain-pro-srdc\srdc\lib\site-packages (from matplotlib) (2.3.5)
+Requirement already satisfied: packaging>=20.0 in c:\domain-pro-srdc\srdc\lib\site-packages (from matplotlib) (26.0)
+Requirement already satisfied: pillow>=8 in c:\domain-pro-srdc\srdc\lib\site-packages (from matplotlib) (12.0.0)
+Collecting pyparsing>=3 (from matplotlib)
+  Downloading pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
+Requirement already satisfied: python-dateutil>=2.7 in c:\domain-pro-srdc\srdc\lib\site-packages (from matplotlib) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in c:\domain-pro-srdc\srdc\lib\site-packages (from python-dateutil>=2.7->matplotlib) (1.17.0)
+Downloading matplotlib-3.10.8-cp312-cp312-win_amd64.whl (8.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.1/8.1 MB 597.6 kB/s eta 0:00:00
+Using cached contourpy-1.3.3-cp312-cp312-win_amd64.whl (226 kB)
+Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.61.1-cp312-cp312-win_amd64.whl (2.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 609.5 kB/s eta 0:00:00
+Using cached kiwisolver-1.4.9-cp312-cp312-win_amd64.whl (73 kB)
+Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
+Installing collected packages: pyparsing, kiwisolver, fonttools, cycler, contourpy, matplotlib
+Successfully installed contourpy-1.3.3 cycler-0.12.1 fonttools-4.61.1 kiwisolver-1.4.9 matplotlib-3.10.8 pyparsing-3.3.2
+
+[notice] A new release of pip is available: 24.2 -> 26.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python Feature_Internal_Semantic_Processing/Internal_Semantic_Processing.py --RansomwareData_csv_path data/RansomwareData/RansomwareData.csv --VariableNames_txt_path data/VariableNames.txt
+Traceback (most recent call last):
+  File "C:\DOMAIN-PRO-SRDC\project\SRDC\Feature_Internal_Semantic_Processing\Internal_Semantic_Processing.py", line 210, in <module>
+    main()
+  File "C:\DOMAIN-PRO-SRDC\project\SRDC\Feature_Internal_Semantic_Processing\Internal_Semantic_Processing.py", line 121, in main
+    for line in file :
+                ^^^^
+  File "C:\Program Files\Python312\Lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'charmap' codec can't dpython -c "with open('data/VariableNames.txt', 'r', encoding='latin1') as f: print('VariableNames OK'); print(f.read(200))"RDC>
+VariableNames OK
+1;ID
+2;Label (1 Ransomware / 0 Goodware)
+3;Ransomware Family
+4;API:GetSystemDirectoryA
+5;API:WriteConsoleA
+6;API:NtOpenFile
+7;API:NtCreateProcessEx
+8;API:GetSystemInfo
+9;API:WriteConsoleW
+10;API:NtRea
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python -c "with open('data/RansomwareData/RansomwareData.csv', 'r', encoding='latin1') as f: print('CSV OK'); print(f.read(200))"
+CSV OK
+10001,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC>
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC>
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python Feature_Internal_Semantic_Processing/Internal_Semantic_Processing.py --RansomwareData_csv_path data/RansomwareData/RansomwareData.csv --VariableNames_txt_path data/VariableNames.txt
+Processing completed successfully!
+Output saved to: C:\DOMAIN-PRO-SRDC\project\SRDC\after_feature_internal_semantic_process_data.csv
+Rows processed: 1524
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> dir after*
+
+
+    Directory: C:\DOMAIN-PRO-SRDC\project\SRDC
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        13-02-2026  03:31 PM       10657580 after_feature_internal_semantic_process_data.csv
+
+
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python # save as: split_data.py
+>> import pandas as pd
+>> from sklearn.model_selection import train_test_split
+>>
+>> df = pd.read_csv("after_feature_internal_semantic_process_data.csv")
+>>
+>> # Map family to binary label: 0 = Goodware, 1 = Ransomware
+>> df['label'] = df['family'].apply(lambda x: 0 if x == "Goodware" else 1)
+>>
+>> # Stratified split to keep class balance
+>> train_df, test_df = train_test_split(
+>>     df,
+>>     test_size=0.2,
+>>     stratify=df['label'],
+>>     random_state=42
+>> )
+>>
+>> train_df.to_csv("train.csv", index=False)
+>> test_df.to_csv("test.csv", index=False)
+>>
+>> print(f"Train: {len(train_df)} rows | Test: {len(test_df)} rows")
+>> print("Saved: train.csv and test.csv")
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python split_data.py
+Train: 1219 rows | Test: 305 rows
+Saved: train.csv and test.csv
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> python ZeroDay_Ransomware_Detection/ransomware_0_day_detection.py ^
+>>   --Data_Train_path train.csv ^
+>>   --Data_Test_path test.csv
+At line:2 char:5
++   --Data_Train_path train.csv ^
++     ~
+Missing expression after unary operator '--'.
+At line:2 char:5
++   --Data_Train_path train.csv ^
++     ~~~~~~~~~~~~~~~
+Unexpected token 'Data_Train_path' in expression or statement.
+At line:3 char:5
++   --Data_Test_path test.csv
++     ~
+Missing expression after unary operator '--'.
+At line:3 char:5
++   --Data_Test_path test.csv
++     ~~~~~~~~~~~~~~
+Unexpected token 'Data_Test_path' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingExpressionAfterOperator
+
+(srdc) PS C:\DOMAIN-PRO-SRDC\project\SRDC> 
+
+
+
+
+---------------------------------------still in step 5 as of feb 14 2:57 pm ---------------------
+
+https://grok.com/share/c2hhcmQtMg_b625fb41-c5b5-4312-9c86-c071e74fffe8
+
+dtata leakage noticed in collab . so change some code and restartv in collab 
+
+------------------------------done with training runned ransomeware_0_day_detection.py--------------
+
+https://grok.com/share/c2hhcmQtMg_5f063f30-6955-445f-9736-609a97dcb437
+
+downladed result.txt. it is in downloads
+
+
+-----------------confirm done after step 5---------------------
+
+https://grok.com/share/c2hhcmQtMg_83c0ed7c-b923-435d-bb7b-38175c64f7e7
+
+
+----------------------------what i did so far------------------------
+
+https://grok.com/share/c2hhcmQtMg_85001833-8b6c-4e8f-a0b1-6e80c7416d6f
+
+
+---------------------------done with model traiing-----------------------
+
+https://grok.com/share/c2hhcmQtMg_337085c9-9b17-41a7-91d4-7a288529a002
+
+
+
+---------------what we did? -----------------------------------------
+
+https://grok.com/share/c2hhcmQtMg_c9b81910-910c-4095-a0f4-f51d2bd9f17e
+
+
+
+
+run srdc_demo_fixed.py with keeping test.cs and zero_day_test.csv in runtime. using command :
+!python srdc_demo_fixed.py
+
+zero_day_test.csv (268 samples)
+├── Purpose: "Is it ransomware?" ← BINARY detection (Experiment 1)
+├── Contains: Goodware + 4 UNSEEN ransomware families
+├── Used by: srdc_zero_day_BEST.pth model
+└── Demo showed: Sample 1=Goodware, Sample 2/3=Ransomware ✅
+
+test.csv (305 samples)  
+├── Purpose: "Which family?" ← FAMILY classification (Experiment 2)  
+├── Contains: All 12 families (seen during training)
+├── Used by: srdc_family_BEST.pth model (trained on this)
+└── Demo used it indirectly for family names

@@ -1,0 +1,5 @@
+*.pth
+srdc/
+__pycache__/
+*.pyc
+.env
