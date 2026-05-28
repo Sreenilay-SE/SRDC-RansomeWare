@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "SRDC Shield 🛡️",
+  "version": "1.0",
+  "description": "Semantics-based Zero-Day Ransomware Detection with LLM explainability. Intercepts files pre-disk.",
+  "permissions": [
+    "downloads",
+    "downloads.open",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:5000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/shield_16.png",
+      "48": "icons/shield_48.png",
+      "128": "icons/shield_128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/shield_16.png",
+    "48": "icons/shield_48.png",
+    "128": "icons/shield_128.png"
+  }
+}

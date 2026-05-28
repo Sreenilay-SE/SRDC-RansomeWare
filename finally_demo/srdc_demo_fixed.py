@@ -1,7 +1,7 @@
 
 import sys
 import os
-sys.stdout.reconfigure(line_buffering=True)  # Fix Colab output buffering
+sys.stdout.reconfigure(encoding='utf-8', line_buffering=True)
 
 import pandas as pd
 import torch
@@ -10,8 +10,12 @@ from transformers import GPT2Tokenizer, GPT2Model
 import time
 import random
 
-BINARY_MODEL_PATH = '/content/drive/MyDrive/SRDC_Project/srdc_zero_day_BEST.pth'
-FAMILY_MODEL_PATH = '/content/drive/MyDrive/SRDC_Project/srdc_family_BEST.pth'
+# Resolve paths relative to this script's location
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.join(SCRIPT_DIR, '..', 'project', 'SRDC')
+
+BINARY_MODEL_PATH = os.path.join(PROJECT_ROOT, 'result', 'srdc_zero_day_BEST.pth')
+FAMILY_MODEL_PATH = os.path.join(PROJECT_ROOT, 'result', 'srdc_family_BEST.pth')
 
 FAMILY_NAMES = {
     0: 'Goodware', 1: 'Citroni', 2: 'CryptLocker',
@@ -85,12 +89,12 @@ def run_demo():
     tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
     tokenizer.pad_token = tokenizer.eos_token
 
-    df_binary = pd.read_csv('zero_day_test.csv')
-    df_family = pd.read_csv('test.csv')
+    df_binary = pd.read_csv(os.path.join(PROJECT_ROOT, 'splits', 'zero_day_test.csv'))
+    df_family = pd.read_csv(os.path.join(PROJECT_ROOT, 'splits', 'test.csv'))
 
-    ransomware_samples = df_binary[df_binary['is_ransomware'] == 1].sample(2, random_state=42)
-    goodware_samples   = df_binary[df_binary['is_ransomware'] == 0].sample(1, random_state=42)
-    demo_samples = pd.concat([ransomware_samples, goodware_samples]).sample(frac=1, random_state=7).reset_index(drop=True)
+    ransomware_samples = df_binary[df_binary['is_ransomware'] == 1].sample(2)
+    goodware_samples   = df_binary[df_binary['is_ransomware'] == 0].sample(1)
+    demo_samples = pd.concat([ransomware_samples, goodware_samples]).sample(frac=1).reset_index(drop=True)
 
     print("="*60)
     print(" SANDBOX MONITORING ACTIVE — 3 SAMPLES QUEUED", flush=True)

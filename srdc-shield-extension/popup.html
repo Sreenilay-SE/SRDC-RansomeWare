@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SRDC Shield Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="shield-icon">🛡️</span>
+        <div class="logo-text">
+          <h1>SRDC SHIELD</h1>
+          <p>Cognitive Zero-Day Interceptor</p>
+        </div>
+      </div>
+      <div class="status-badge" id="engine-status">
+        <span class="status-dot green"></span>
+        <span class="badge-text">Engine Ready</span>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tab-live">Live Shield</button>
+      <button class="tab-btn" id="tab-history">Scan History</button>
+      <button class="tab-btn" id="tab-settings">Settings</button>
+    </nav>
+
+    <!-- Content Sections -->
+    <main class="main-content">
+      
+      <!-- 1. LIVE SHIELD TAB -->
+      <section class="tab-content active-content" id="content-live">
+        <!-- Main Shield Visualizer -->
+        <div class="glass-card main-shield-card">
+          <div class="pulse-ring active-ring" id="shield-ring">
+            <div class="shield-core green-glow" id="shield-core">🛡️</div>
+          </div>
+          <h2 class="shield-verdict-title" id="scan-verdict">SYSTEM SECURED</h2>
+          <p class="shield-verdict-desc" id="scan-desc">Shield is active. Monitoring for insecure dynamic downloads pre-disk.</p>
+        </div>
+
+        <!-- File Under Scan Card -->
+        <div class="glass-card scan-progress-card hidden" id="file-card">
+          <div class="card-header">
+            <h3>Active Sandbox Scan</h3>
+            <span class="scan-timer" id="scan-time">0.00s</span>
+          </div>
+          <div class="file-details">
+            <span class="file-icon">📥</span>
+            <div class="file-text">
+              <h4 class="filename-text" id="file-name">Analyzing File...</h4>
+              <p class="file-url-text" id="file-url">URL loading...</p>
+            </div>
+          </div>
+
+          <!-- Progress Stepper -->
+          <div class="progress-stepper">
+            <div class="step" id="step-intercept">
+              <div class="step-dot active-dot">✓</div>
+              <span class="step-label">Pre-Disk Paused</span>
+            </div>
+            <div class="step-line" id="line-1"></div>
+            <div class="step" id="step-vt">
+              <div class="step-dot" id="dot-vt">1</div>
+              <span class="step-label">VirusTotal Engine</span>
+            </div>
+            <div class="step-line" id="line-2"></div>
+            <div class="step" id="step-srdc">
+              <div class="step-dot" id="dot-srdc">2</div>
+              <span class="step-label">SRDC Semantic AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Explainability / Audit Card -->
+        <div class="glass-card explainability-card hidden" id="explain-card">
+          <h3>🔍 Cognitive Audit Report</h3>
+          
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <span class="m-title">VirusTotal Scan</span>
+              <span class="m-val" id="val-vt">--</span>
+            </div>
+            <div class="metric-item">
+              <span class="m-title">Zero-Day AI Match</span>
+              <span class="m-val" id="val-srdc">--</span>
+            </div>
+          </div>
+
+          <div class="explanation-box">
+            <h4>Behavior Intention Analysis:</h4>
+            <ul id="explain-list" class="explain-list">
+              <!-- Explanations populated dynamically -->
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. HISTORY TAB -->
+      <section class="tab-content" id="content-history">
+        <div class="glass-card history-container">
+          <h3>Recent Scan Log</h3>
+          <div class="history-list" id="history-items">
+            <!-- Populated dynamically -->
+            <p class="empty-text">No downloads scanned yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. SETTINGS TAB -->
+      <section class="tab-content" id="content-settings">
+        <div class="glass-card settings-card">
+          <h3>Configuration Panel</h3>
+          
+          <div class="settings-group">
+            <label for="vt-api-input">VirusTotal API Key (Public)</label>
+            <input type="password" id="vt-api-input" placeholder="Paste your API key here..." class="glass-input">
+            <p class="input-tip">Provides scanning of known trojans, miners, and adware. Get a free API key at VirusTotal.com</p>
+          </div>
+
+          <div class="settings-group toggle-group">
+            <div class="toggle-text">
+              <h4>Strict Mode</h4>
+              <p>Block the download if the local model exhibits ANY doubt (lowers zero-day risk).</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="strict-mode">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <button class="primary-btn" id="save-settings">Save Configurations</button>
+          <div id="save-status" class="save-status hidden">Settings saved successfully!</div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Powered by AAAI-2025 SRDC Semantic Architecture</p>
+    </footer>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

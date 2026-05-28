@@ -1,0 +1,79 @@
+Project name: SRDC Implementation
+Paper: AAAI-2025 SRDC Paper
+Date of scan: 2026-05-12
+Overall completion percentage: 80%
+
+[PHASE 1: Dataset Setup]
+Status: DONE
+Files found: 
+- `project/SRDC/data/RansomwareData/RansomwareData.csv`
+- `project/SRDC/data/VariableNames.txt`
+What is working: Dataset is successfully loaded, containing 582 ransomware (11 families) and 942 goodware samples with dynamic features.
+What is missing: Nothing.
+Next action needed: None.
+
+[PHASE 2: External Corpus (LATAP Pre-training Data)]
+Status: DONE
+Files found: 
+- `project/SRDC/Pretraining_Corpus/train_data.json`
+- `project/SRDC/Pretraining_Corpus/PromptDesign.md`
+What is working: Corpus successfully compiled containing ~10255 items (APIs, Registry, Ransomware reports).
+What is missing: Nothing.
+Next action needed: None.
+
+[PHASE 3: LATAP - LLM-assisted Task-Adaptive Pre-training]
+Status: PARTIALLY DONE
+Files found: (No training script found, but weights are referenced in classifier files)
+What is working: The classification models successfully load pre-trained SRDC-GPT weights from HuggingFace (`zhouce/RDC-GPT`).
+What is missing: The actual code/script to perform the LATAP pre-training of the GPT-2 base model (124M) on your external corpus (`train_data.json`) from scratch is missing. You are currently downloading the finished weights instead of training them.
+Next action needed: Write a `pretrain_gpt2.py` script using HuggingFace's Trainer to fine-tune `gpt2` on `train_data.json` using causal language modeling.
+
+[PHASE 4: Feature Internal Semantic Processing]
+Status: DONE
+Files found: 
+- `project/SRDC/Feature_Internal_Semantic_Processing/Internal_Semantic_Processing.py`
+- `project/SRDC/after_feature_internal_semantic_process_data.csv`
+What is working: Script successfully parses and enhances features (W/A suffix removal, CamelCase splitting, verb+object addition) into natural language phrases. Output is correctly generated.
+What is missing: Nothing.
+Next action needed: None.
+
+[PHASE 5: Combinatorial Models (Hierarchical Feature Encoding)]
+Status: DONE
+Files found: 
+- `project/SRDC/Ransomware_Family_Classification/Maxpooling/Model.py`
+- `project/SRDC/ZeroDay_Ransomware_Detection/Maxpooling/Model.py`
+What is working: The 7 features are fed iteratively into the GPT-2 model in a loop inside the `Classifier` forward pass, successfully bypassing the 1024 token limit.
+What is missing: Nothing.
+Next action needed: None.
+
+[PHASE 6: Feature Compression Extractor]
+Status: DONE
+Files found: 
+- `project/SRDC/Ransomware_Family_Classification/Maxpooling/Model.py` (and Avg/LSTM equivalents)
+What is working: `nn.AdaptiveMaxPool1d` is correctly implemented to compress each feature type's hidden states down to fixed-size vectors.
+What is missing: Nothing.
+Next action needed: None.
+
+[PHASE 7: Feature Combination Classifier]
+Status: DONE
+Files found: 
+- `project/SRDC/srdc_family_classification.py`
+- `project/SRDC/ZeroDay_Ransomware_Detection/srdc_zero_day.py`
+What is working: Features are concatenated using `torch.cat`, passed to a linear classification head, and training loops for both Task 1 (Family Classification) and Task 2 (Zero-Day) are implemented.
+What is missing: Nothing.
+Next action needed: None.
+
+[PHASE 8: Evaluation]
+Status: PARTIALLY DONE
+Files found: 
+- `project/SRDC/srdc_family_classification.py`
+- `project/SRDC/ZeroDay_Ransomware_Detection/srdc_zero_day.py`
+- `project/SRDC/result/family_results.csv`, `zero_day_results.csv`
+What is working: Standard metrics (Balanced Accuracy, Accuracy, Recall, F1-Score) are being calculated via sklearn's `classification_report` and logged correctly.
+What is missing: The paper includes comparative baselines (LSTM, KNN, VarLenPSO, BERT, DCAE-ZSLHVE) and few-shot learning experiments (reducing seen families from 7 to 2) which are completely absent from the codebase. 
+Next action needed: Implement scripts for baseline models and the few-shot evaluation split logic to fully replicate the paper's results.
+
+RECOMMENDED NEXT 3 STEPS:
+Step 1: Write `pretrain_gpt2.py` in the `Pretraining_Corpus` folder to actually train the LATAP model on `train_data.json` instead of relying on the pre-uploaded `zhouce/RDC-GPT`.
+Step 2: Create a `baselines/` directory and implement the comparative baseline models (LSTM, KNN, VarLenPSO, BERT, DCAE-ZSLHVE) for evaluation.
+Step 3: Add a script to generate few-shot datasets (varying seen families from 2 to 7) and evaluate the trained model on these splits.
