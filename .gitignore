@@ -3,3 +3,14 @@
 __pycache__/
 *.pyc
 .env
+
+# Build and IDE files
+build/
+dist/
+*.spec
+.idea/
+.vscode/
+
+# Local/sandbox temp files
+sandbox_temp/
+scratch/

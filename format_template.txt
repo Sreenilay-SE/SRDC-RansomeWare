@@ -1,0 +1,352 @@
+
+A Real-time Research Project/Societal Related Project
+Report on
+<Title of the Project>
+Submitted in Partial fulfillment of requirements for B.Tech II Year II Semester course 
+
+
+
+By
+
+
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+
+
+
+
+Under the guidance of
+
+Ms./Mr./Dr.Mentor Name
+<Designation>, <Department>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+KESHAV MEMORIAL INSTITUTE OF TECHNOLOGY (AN AUTONOMOUS INSTITUTION)Accredited by NBA & NAAC, Approved by AICTE, Affiliated to JNTUH.
+Narayanaguda, Hyderabad,Telangana-29
+2025-26
+
+
+
+KESHAV MEMORIAL INSTITUTE OF TECHNOLOGY (AN AUTONOMOUS INSTITUTION)Accredited by NBA & NAAC, Approved by AICTE, Affiliated to JNTUH
+Narayanaguda, Hyderabad,Telangana-29
+
+
+
+
+
+
+
+CERTIFICATE
+
+
+This is to certify that this is a bonafide record of the project report titled “<Title>”which is being presented as the Real-time Research Project / Societal Related Project report by
+
+
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+
+
+In partial fulfillment for the II Year II Semester Course RTRP in KMIT affiliated to the Jawaharlal Nehru Technological University, Hyderabad
+
+
+
+Mentors
+(Ms/Mr/Dr.  XXXX                                                                       Program Coordinator
+                                                                                                           (Mr Shailesh Gangakhedkar)
+
+
+
+Submitted for Final Project Review held on____________________________
+
+
+
+
+
+
+
+Vision& Mission of KMIT
+
+Vision 
+
+To be the fountain head in producing highly skilled, globally competent engineers.
+Producing quality graduates trained in the latest software technologies and related tools and striving to make India a world leader in software products and services.
+
+Mission 
+To provide a learning environment that inculcates problem solving skills, professional, ethical responsibilities, lifelong learning through multi model platforms and prepares students to become successful professionals.
+To establish an industry institute Interaction to make students ready for the industry.
+To provide exposure to students on the latest hard ware and software tools.
+Topromoteresearch-basedprojects/activitiesintheemergingareasoftechnologyconvergence.
+To encourage and enable students to not merely seek jobs from the industry but also to create new enterprises.
+To induce a spirit of nationalism which will enable the student to develop, understand India's challenges and to encourage them to develop effective solutions.
+To support the faculty to accelerate their learning curve to deliver excellent service to students.
+
+PROGRAM OUTCOMES(POs)
+
+PO1. Engineering Knowledge: Apply the knowledge of mathematics, science, engineering fundamentals, and an engineering specialization to the solution of complex engineering problems.
+
+PO2. Problem Analysis: Identify formulate, review research literature, and analyze complex engineering problems reaching substantiated conclusions using first principles of mathematics, natural sciences, and engineering sciences
+
+PO3. Design/Development of solutions: Design solutions for complex engineering problems and design system components or processes that meet the specified needs with appropriate consideration for the public health and safety, and the cultural, societal, and environmental considerations.
+
+PO4. Conduct Investigations of Complex problems: Use research-based knowledge and research methods including design of experiments, analysis and inter pretation of data, and synthesis of the information to provide valid conclusions.
+
+PO5. Modern Tool Usage: Create select, and, apply appropriate techniques, resources, and modern engineering and IT tools including prediction and modeling to complex engineering activities with an understanding of the limitations.
+
+PO6. The Engineer and Society: Apply reasoning informed by contextual knowledge to societal, health, safety. Legal und cultural issues and the consequent responsibilities relevant to professional engineering practice.
+
+PO7. Environment and Sustainability: Understand the impact of the professional engineering solutions in societal and environmental contexts and demonstrate the knowledge of, and need for sustainable development.
+PO8. Ethics: Apply ethical principles and commit professional ethics and responsibilities and norms of the engineering practice.
+PO9. Individual and Team Work: Function effectively as an individual, and as a member or leader in diverse teams and in multidisciplinary settings.
+
+
+
+PO10. Communication: Communicate effectively on complex engineering activities with the engineering community and with societ yat large, such as, being able to comprehend and write effective reports and design documentation, make effective presentations, and give and receive clear instructions.
+
+PO11. Project Management and Finance: Demonstrate knowledge and understanding of the engineering and management principles and apply these to one's own work, as a member and leader in a team, to manage projects and in multi disciplinary environments.
+
+PO12. Life-Long Learning: Recognize the need for, and have the preparation and abilitytoengageinindependentandlife-longlearninginthebroadestcontextoftechnological change.
+
+PROJECT OUTCOMES
+
+P1: Write Your Project Outcomes Here
+P2: Write Your Project Outcomes Here
+P3: Write Your Project Outcomes Here
+P4: Write Your Project Outcomes Here
+
+MAPPING PROJECTOUTCOMESWITH PROGRAMOUTCOMES
+
+
+PO
+PO1
+PO2
+PO3
+PO4
+PO5
+PO6
+PO7
+PO8
+PO9
+PO10
+PO11
+PO12
+P1
+
+
+
+
+
+
+
+
+
+
+
+
+P2
+
+
+
+
+
+
+
+
+
+
+
+
+P3
+
+
+
+
+
+
+
+
+
+
+
+
+P4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+L– LOWM –MEDIUMH– HIGH
+
+
+
+DECLARATION
+
+
+We hereby declare that the results embodied in the dissertation entitled “<Title>”has been carried out by us together during the academic year2024-25 as a partial fulfillment of the B.Tech II Year II Semester Course “Real-time Research Project / Societal Related Project”. We have not submitted this report to any other Course/College.
+
+
+
+
+
+
+Student Name                           Roll no.
+
+
+1.<Student Name><ROLL NUMBER>
+2.<Student Name><ROLL NUMBER>
+3.<Student Name><ROLL NUMBER>
+4.<Student Name><ROLL NUMBER>
+ACKNOWLEDGEMENT
+
+We take this opportunity to thank all the people who have rendered their full support to our project work. We render our thanks to Dr. B L Malleswari, Principal who encouraged us to do the Project.
+
+We are grateful to Mr. Neil Gogte, Founder & Director and Mr. S. Nitin, Director, for facilitating all the amenities required for carrying out this project.
+
+We express our sincere gratitude to Ms. Deepa Ganu, Academic Director for providing an excellent environment in the college.
+
+
+We are also thankful to Mr.Shailesh Gangakhedkar, Real-Time Research Project Program Coordinator for providing us with time to make this project a success within the given schedule.
+
+We are also thankful to our Project Mentor Ms. XXXX / Mr. XXX, for her/his valuable guidance and encouragement given to us throughout the project work.
+
+We would like to thank the entire KMIT faculty, who helped us directly and indirectly in the completion of the project.
+
+We sincerely thank our friends and family for their constant motivation during the project work.
+
+
+Student Name   Roll no.
+
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+<Student Name><ROLL NUMBER>
+
+ABSTRACT
+
+
+YOUR PROJECT ABSTRACT SHOUL BE HERE
+In this project, a prototype and implementation of Home Appliances is demonstrated. The proposed system consists of a Hardware interface and Software interface. Hardware interface includes Raspberry Pi, lights, fans, DC motor and software interface includes IOT supporteddashboardplatform.WeautomatelightsandfansusingmotionsensorslikeIRsensorsorwecan use an IOT based dashboard for operating fans and lights. A Raspberry Pi is used for controlling home appliances and sensors. An application is provided for controlling multiple home appliances. This system is one of the best methods for controlling home devices with easewith multiple users and one of the best methods for an energy management system. This XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+LISTOFFIGURES
+
+
+
+S.No
+
+Name of Screenshot
+
+Page No.
+
+1.
+
+
+
+2.
+
+
+
+3.
+
+
+
+4.
+
+
+
+5.
+
+
+
+CONTENTS
+
+DESCRIPTIONPAGECHAPTER-11
+INTRODUCTION2-4
+Purpose of the project2
+Problem with Existing Systems2
+Proposed System3
+Scope of the Project3
+Architecture Diagram4
+CHAPTER–25
+LITERATURESURVEY6-7
+CHAPTER-38
+SOFTWAREREQUIREMENTSPECIFICATION9-12
+Introduction to SRS9
+Role of SRS9
+Requirements Specification Document10
+Functional Requirements10
+Non-Functional Requirements11
+Performance Requirements11
+Software Requirements11
+Hardware Requirements12
+CHAPTER–413
+SYSTEMDESIGN14-30
+Introduction to UML14
+
+UML Diagrams15
+Use Case Diagram15
+Sequence Diagram18
+State Chart Diagram19
+Deployment Diagram20
+TECHNOLOGIESUSED21
+CHAPTER–532
+IMPLEMENTATION33-42
+Setting up connections with Raspberry PI33
+Coding the logic35
+Connecting the dashboard40
+Screenshots42
+UI Screen shots43
+CHAPTER–644
+SOFTWARETESTING45-51
+Introduction45
+Testing Objectives45
+Testing Strategies45
+System Evaluation48
+Testing New System49
+Test Cases50
+CONCLUSION52
+FUTUREENHANCEMENTS53
+REFERENCES54
+BIBLIOGRAPHY55
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER-1
+
+INTRODUCTION
