@@ -33,8 +33,8 @@ BASE_DIR = r"C:\Users\sree nilay\Downloads\DOMAIN-PRO-SRDC\DOMAIN-PRO-SRDC"
 SANDBOX_DIR = os.path.join(BASE_DIR, "sandbox_temp")
 os.makedirs(SANDBOX_DIR, exist_ok=True)
 
-ZD_MODEL_PATH = os.path.join(BASE_DIR, "project", "SRDC", "result", "srdc_zero_day_BEST.pth")
-FAM_MODEL_PATH = os.path.join(BASE_DIR, "project", "SRDC", "result", "srdc_family_BEST.pth")
+ZD_MODEL_PATH = os.path.join(BASE_DIR, "PHASE2", "srdc_zero_day_BEST.pth")
+FAM_MODEL_PATH = os.path.join(BASE_DIR, "PHASE2", "srdc_family_BEST.pth")
 
 # Optional: Set your VirusTotal API Key here, or pass it via request header/config
 VT_API_KEY = os.environ.get("VT_API_KEY", "")
@@ -66,16 +66,49 @@ API_EXPLANATIONS = {
 # ----------------------------------------------------------------------
 # PyTorch Model Definitions & Preloading
 # ----------------------------------------------------------------------
-class Classifier(nn.Module):
-    def __init__(self, hidden_size=768, num_classes=2):
+NUM_FEATURES = 7
+COMPRESSION_RATIO = 64
+
+class MaxPoolingClassifier(nn.Module):
+    def __init__(self, hidden_size=768, num_classes=2, compression_ratio=COMPRESSION_RATIO):
         super().__init__()
-        self.gpt = GPT2Model.from_pretrained("zhouce/RDC-GPT")
-        self.linear = nn.Linear(hidden_size, num_classes)
+        self.gpt2model = GPT2Model.from_pretrained("zhouce/RDC-GPT")
+        self.pooling = nn.AdaptiveMaxPool1d(compression_ratio)
+        fc_input_dim = NUM_FEATURES * compression_ratio * hidden_size
+        self.fc1 = nn.Linear(fc_input_dim, num_classes)
 
     def forward(self, input_ids, attention_mask):
-        outputs = self.gpt(input_ids=input_ids, attention_mask=attention_mask)
-        pooled = outputs.last_hidden_state.mean(dim=1)
-        return self.linear(pooled)
+        batch_size = input_ids.shape[0]
+        pooled_outputs = []
+        for i in range(NUM_FEATURES):
+            sub_input_ids = input_ids[:, i, :]
+            sub_mask = attention_mask[:, i, :]
+            gpt_out = self.gpt2model(input_ids=sub_input_ids, attention_mask=sub_mask).last_hidden_state
+            gpt_out_t = gpt_out.transpose(1, 2)
+            pooled = self.pooling(gpt_out_t)
+            pooled = pooled.transpose(1, 2)
+            pooled_outputs.append(pooled)
+        result = torch.cat(pooled_outputs, dim=1)
+        result_flat = result.view(batch_size, -1)
+        return self.fc1(result_flat)
+
+def tokenize_features(features_list, tokenizer):
+    all_input_ids = []
+    all_attention_masks = []
+    for text in features_list:
+        encoding = tokenizer(
+            text,
+            truncation=True,
+            max_length=1024,
+            padding='max_length',
+            return_tensors='pt'
+        )
+        all_input_ids.append(encoding['input_ids'].squeeze(0))
+        all_attention_masks.append(encoding['attention_mask'].squeeze(0))
+    # Shape: (1, 7, 1024)
+    input_ids = torch.stack(all_input_ids, dim=0).unsqueeze(0)
+    attention_mask = torch.stack(all_attention_masks, dim=0).unsqueeze(0)
+    return input_ids, attention_mask
 
 print("=" * 70)
 print("🛡️  INITIALISING SRDC SHIELD COGNITIVE BACKEND...")
@@ -90,14 +123,14 @@ tokenizer.pad_token = tokenizer.eos_token
 device = torch.device("cpu")
 print("[INFO] Preloading Zero-Day Model (498MB) onto CPU memory...")
 t0 = time.time()
-zd_model = Classifier(hidden_size=768, num_classes=2)
+zd_model = MaxPoolingClassifier(hidden_size=768, num_classes=2)
 zd_model.load_state_dict(torch.load(ZD_MODEL_PATH, map_location=device))
 zd_model.eval()
 print(f"[INFO] Zero-Day Model loaded in {time.time()-t0:.1f}s ✅")
 
 print("[INFO] Preloading Family Classifier Model (498MB) onto CPU memory...")
 t1 = time.time()
-fam_model = Classifier(hidden_size=768, num_classes=12)
+fam_model = MaxPoolingClassifier(hidden_size=768, num_classes=12)
 fam_model.load_state_dict(torch.load(FAM_MODEL_PATH, map_location=device))
 fam_model.eval()
 print(f"[INFO] Family Model loaded in {time.time()-t1:.1f}s ✅")
@@ -215,11 +248,9 @@ def analyze_pe_file(filepath):
     dir_text = "enumerated directory C\\Documents and Settings\\MyUser\\Desktop\\test-personal-files\\img\\. " # default
     str_text = ". ".join(str_list) + ". " if str_list else ""
     
-    combined_behavior = (
-        api_text + drop_text + reg_text + files_text + ext_text + dir_text + str_text
-    ).strip()
+    features_list = [api_text, drop_text, reg_text, files_text, ext_text, dir_text, str_text]
 
-    return combined_behavior, explanations
+    return features_list, explanations
 
 # ----------------------------------------------------------------------
 # Core REST Endpoints
@@ -262,27 +293,26 @@ def analyze():
         }
         
         # Inject realistic Ransomware imports (Layer 2)
-        behavior_text = (
-            "API:kernel create file. API:kernel write file. API:crypt encrypt. "
-            "API:find first file. API:find next file. API:reg set value. "
-            "operations involved opening file with extension tmp. "
-            "opened registry HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run. "
+        mock_features = [
+            "API:kernel create file. API:kernel write file. API:crypt encrypt. API:find first file. API:find next file. API:reg set value. ",
+            "operations involved opening file with extension tmp. ",
+            "opened registry HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run. ",
+            "opened file in C\\Users\\Admin\\AppData\\Local\\Temp. ",
+            "operations involved opening file with extension exe. ",
+            "enumerated directory C\\Documents and Settings\\MyUser\\Desktop\\test-personal-files\\img\\. ",
             "embeded string CryptEncrypt. embeded string FindFirstFile"
-        )
+        ]
         
         # Run live model inference on the mock behavior
         with torch.no_grad():
-            inputs = tokenizer(
-                behavior_text, truncation=True, max_length=1024,
-                padding='max_length', return_tensors='pt'
-            )
-            logits = zd_model(inputs['input_ids'], inputs['attention_mask'])
+            input_ids, attention_mask = tokenize_features(mock_features, tokenizer)
+            logits = zd_model(input_ids, attention_mask)
             probs = torch.softmax(logits, dim=1).squeeze().numpy()
             pred = int(logits.argmax(dim=1).item())
             confidence = float(probs[pred])
             
             # Run Family Classifier
-            fam_logits = fam_model(inputs['input_ids'], inputs['attention_mask'])
+            fam_logits = fam_model(input_ids, attention_mask)
             fam_pred = int(fam_logits.argmax(dim=1).item())
             fam_name = FAMILY_NAMES.get(fam_pred, 'CryptoWall')
             
@@ -410,15 +440,12 @@ def analyze():
             if found_executables:
                 print(f"[ZIP SCAN] Found {len(found_executables)} executables inside the archive. Initiating SRDC AI scan...")
                 for nested_name, nested_path in found_executables:
-                    behavior_text, nested_explanations = analyze_pe_file(nested_path)
+                    features_list, nested_explanations = analyze_pe_file(nested_path)
                     
-                    if behavior_text.strip():
+                    if any(f.strip() for f in features_list):
                         with torch.no_grad():
-                            inputs = tokenizer(
-                                behavior_text, truncation=True, max_length=1024,
-                                padding='max_length', return_tensors='pt'
-                            )
-                            logits = zd_model(inputs['input_ids'], inputs['attention_mask'])
+                            input_ids, attention_mask = tokenize_features(features_list, tokenizer)
+                            logits = zd_model(input_ids, attention_mask)
                             probs = torch.softmax(logits, dim=1).squeeze().numpy()
                             pred = int(logits.argmax(dim=1).item())
                             confidence = float(probs[pred])
@@ -427,7 +454,7 @@ def analyze():
                                 srdc_flagged = True
                                 
                                 # Run Family Classifier
-                                fam_logits = fam_model(inputs['input_ids'], inputs['attention_mask'])
+                                fam_logits = fam_model(input_ids, attention_mask)
                                 fam_pred = int(fam_logits.argmax(dim=1).item())
                                 fam_name = FAMILY_NAMES.get(fam_pred, 'Locker')
                                 
@@ -480,16 +507,13 @@ def analyze():
                 
     else:
         # Standard Single File Scan (PE binary scan)
-        behavior_text, explanations = analyze_pe_file(temp_path)
+        features_list, explanations = analyze_pe_file(temp_path)
         
-        if behavior_text.strip():
+        if any(f.strip() for f in features_list):
             try:
                 with torch.no_grad():
-                    inputs = tokenizer(
-                        behavior_text, truncation=True, max_length=1024,
-                        padding='max_length', return_tensors='pt'
-                    )
-                    logits = zd_model(inputs['input_ids'], inputs['attention_mask'])
+                    input_ids, attention_mask = tokenize_features(features_list, tokenizer)
+                    logits = zd_model(input_ids, attention_mask)
                     probs = torch.softmax(logits, dim=1).squeeze().numpy()
                     pred = int(logits.argmax(dim=1).item())
                     confidence = float(probs[pred])
@@ -505,7 +529,7 @@ def analyze():
                     if pred == 1 and confidence >= 0.70:
                         srdc_flagged = True
                         
-                        fam_logits = fam_model(inputs['input_ids'], inputs['attention_mask'])
+                        fam_logits = fam_model(input_ids, attention_mask)
                         fam_pred = int(fam_logits.argmax(dim=1).item())
                         fam_name = FAMILY_NAMES.get(fam_pred, 'Locker')
                         if fam_name == 'Goodware' or "test_zero_day_sample" in filename.lower():

@@ -47,6 +47,11 @@ chrome.downloads.onCreated.addListener(async (downloadItem) => {
     const vtKey = result.vt_api_key || "";
     let history = result.scan_history || [];
 
+    // Keep service worker alive during long AI scans
+    const keepAliveInterval = setInterval(() => {
+      chrome.runtime.getPlatformInfo(() => {});
+    }, 15000);
+
     try {
       // Step 2: Post download URL to local Flask engine
       const response = await fetch("http://127.0.0.1:5000/analyze", {
@@ -90,9 +95,16 @@ chrome.downloads.onCreated.addListener(async (downloadItem) => {
       } else {
         // Step 3B: Threat - Cancel download and permanently destroy the .crdownload file
         chrome.storage.local.set({ "current_scan": finalRecord });
+        
+        // Multi-pronged deletion (handles if file already finished downloading)
         chrome.downloads.cancel(downloadItem.id, () => {
-          console.log(`[SRDC Shield] CANCELLED dangerous download: ${downloadItem.id}`);
-          scanningDownloads.delete(downloadItem.id);
+          let err = chrome.runtime.lastError; // Clear last error
+          
+          chrome.downloads.removeFile(downloadItem.id, () => {
+            let err2 = chrome.runtime.lastError;
+            console.log(`[SRDC Shield] Destroyed dangerous file from disk: ${downloadItem.id}`);
+            scanningDownloads.delete(downloadItem.id);
+          });
         });
       }
 
@@ -109,6 +121,8 @@ chrome.downloads.onCreated.addListener(async (downloadItem) => {
       chrome.downloads.resume(downloadItem.id, () => {
         scanningDownloads.delete(downloadItem.id);
       });
+    } finally {
+      clearInterval(keepAliveInterval);
     }
   });
 });
